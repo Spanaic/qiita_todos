@@ -5,11 +5,29 @@
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
     </v-card-title>
+    <v-data-table :headers="headers" :items="todos" :search="search"></v-data-table>
   </v-card>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["todos"], //親から受け取った値
+  data() {
+    return {
+      search: "",
+      headers: [
+        {
+          text: "タイトル",
+          align: "left",
+          sortable: "false",
+          value: "title"
+        },
+        { text: "ユーザー名", value: "username" }
+      ]
+    };
+  }
+  // NOTE: コンポーネントの創りは恐らくvuetifyゲー
+};
 </script>
 
 <style>

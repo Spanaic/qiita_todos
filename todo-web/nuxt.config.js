@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+require('dotenv').config();
 
 export default {
   mode: 'spa',
@@ -30,12 +31,15 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    "@/plugins/vuetify",
+    "@/plugins/firebase"
   ],
   /*
   ** Nuxt.js dev-modules
   */
   buildModules: [
     '@nuxtjs/vuetify',
+    '@nuxtjs/dotenv',
   ],
   /*
   ** Nuxt.js modules
@@ -43,6 +47,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+
   ],
   /*
   ** Axios module configuration
@@ -78,7 +83,7 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
     }
   }
 }

@@ -24,6 +24,7 @@ export default {
   },
   methods: {
     handleSubmit() {
+      this.$emit("submit", this.title); //$emitで渡している第一引数が気になるけど、多分親で使う？
       this.title = ""; //入力フォームの初期化処理
     }
   }
