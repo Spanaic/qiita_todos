@@ -34,7 +34,7 @@ export default {
     "@/plugins/vuetify",
     "@/plugins/firebase",
     "@/plugins/axios",
-    // "@/plugins/auth-check",
+    "@/plugins/auth-check",
   ],
   /*
   ** Nuxt.js dev-modules

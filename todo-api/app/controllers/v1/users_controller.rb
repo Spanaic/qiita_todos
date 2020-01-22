@@ -1,7 +1,8 @@
 class V1::UsersController < ApplicationController
     def index
         if params[:uid]
-            current_user = user.find_by(uid: params[:uid])
+            current_user = User.find_by(uid: params[:uid])
+            # model名を小文字に打ち間違えてた...(user.find_by)
             # emailではなく、uidを格納するカラムを設けて、axiosでuid検索をしに行く
             render json: current_user
             # NOTE:ここのレスポンスはtodoと違って頻繁に確認にしに行くのかもしれない。だからstatus codeがない？
