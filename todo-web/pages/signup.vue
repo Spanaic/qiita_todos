@@ -32,6 +32,7 @@
 
 <script>
 import firebase from "@/plugins/firebase";
+import axios from "@/plugins/axios";
 
 export default {
   data() {
@@ -46,22 +47,8 @@ export default {
       error: "" //passwordの不一致をエラーとして吐き出す用
     };
   },
-  created() {
-    console.log("API_KEY", process.env.API_KEY);
-    console.log(
-      "apikey",
-      process.env.API_KEY,
-      process.env.AUTH_DOMAIN,
-      process.env.DATABASE_URL,
-      process.env.PROJECT_ID,
-      process.env.STORAGE_BUCKET,
-      process.env.MESSAGE_SENDER_ID
-    );
-  },
   methods: {
     signup() {
-      console.log("this.email", this.email);
-      console.log("this.password", this.password);
       if (this.password !== this.passwordConfirm) {
         this.error = "※パスワードとパスワード確認が一致していません";
       }
@@ -69,30 +56,35 @@ export default {
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(res => {
-          console.log("res.user", res.user);
+          const user = {
+            email: res.user.email,
+            name: this.name,
+            uid: res.user.uid
+          };
+          // res.userをそのまま引数に渡さないのは、this.nameを{ user }引数に格納するため
+          // {}でuserをラップしてapiに渡すparamsの形を整えてる！
+          axios.post("/v1/users", { user }).then(() => {
+            //受け取ったresを処理しないため、わかりやすく()に値を格納している
+            this.$route.push("/");
+          });
         })
-        .catch(
-          err => {
-            console.log(err.message); // API key not valid. Please pass a valid API
-          }
-          // .catch(error => {
-          //   this.error = (code => {
-          //     // NOTE:error.codeがある？codeの複数内容の違いをswitch命令でエラーハンドリングしている
-          //     // NOTE:resが返ってくる場合はエラーハンドリングをしっかりと記述する。
-          //     switch (code) {
-          //       case "auth/email-already-in-use":
-          //         return "既にそのメールアドレスは使われています";
-          //       case "auth/wrong-password":
-          //         return "パスワードが正しくありません";
-          //       case "auth/weak-password":
-          //         return "※パスワードを最低6文字移譲にしてください";
-          //       default:
-          //         return "※メールアドレスとパスワードをご確認ください";
-          //     }
-          //   })(error.code);
-          //   // NOTE: アロー関数(switc命令の戻り値 => {switch命令処理}(引数として渡すエラーコード)
-          // });
-        );
+        .catch(error => {
+          this.error = (code => {
+            // NOTE:error.codeがある？codeの複数内容の違いをswitch命令でエラーハンドリングしている
+            // NOTE:resが返ってくる場合はエラーハンドリングをしっかりと記述する。
+            switch (code) {
+              case "auth/email-already-in-use":
+                return "既にそのメールアドレスは使われています";
+              case "auth/wrong-password":
+                return "パスワードが正しくありません";
+              case "auth/weak-password":
+                return "※パスワードを最低6文字移譲にしてください";
+              default:
+                return "※メールアドレスとパスワードをご確認ください";
+            }
+          })(error.code);
+          // NOTE: アロー関数(switc命令の戻り値 => {switch命令処理}(引数として渡すエラーコード)
+        });
     }
   }
 };

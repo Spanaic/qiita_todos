@@ -60,3 +60,9 @@ export default new Vuetify({
     // プラグインを用意して、初回に一度読み込ませることで、毎コンポーネント毎にインポートしなくてもiconが使えるようになる。
 })
 ```
+
+# vuex-persistedstateとsessionStorageを併用してリロードしてもvuexのstoreとpropsを壊さないやり方（を勉強したい（笑））
+
+# API_KEY not validの解決方法
+
+**dotenvには`,`カンマを絶対に付けてはいけない！**

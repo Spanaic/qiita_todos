@@ -32,7 +32,9 @@ export default {
   */
   plugins: [
     "@/plugins/vuetify",
-    "@/plugins/firebase"
+    "@/plugins/firebase",
+    "@/plugins/axios",
+    // "@/plugins/auth-check",
   ],
   /*
   ** Nuxt.js dev-modules
@@ -47,7 +49,6 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-
   ],
   /*
   ** Axios module configuration
