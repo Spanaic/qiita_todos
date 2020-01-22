@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div v-if="user">
+    <p>{{ user.name }}</p>
     <AddTodo @submit="addTodo" />
     <!-- todoの入力フォームコンポーネント -->
     <TodoList :todos="todos" />
@@ -20,6 +21,11 @@ export default {
     return {
       todos: [] //TodoListに渡す値を格納する
     };
+  },
+  computed: {
+    user() {
+      return this.$store.state.currentUser;
+    }
   },
   // created() {
   //   console.log("process.env.API_KEY", process.env.API_KEY);
