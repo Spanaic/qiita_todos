@@ -66,3 +66,26 @@ export default new Vuetify({
 # API_KEY not validの解決方法
 
 **dotenvには`,`カンマを絶対に付けてはいけない！**
+
+# confirm()メソッドと戻り値で条件分岐
+
+1. confirm()メソッドは引数に入れた文字列をダイアログで表示する。
+2. confirm()メソッドの戻り値は(true/false)
+3. 戻り値を利用した条件分岐式が書ける
+
+```html
+<button id="btn">ボタン</button>
+```
+
+```js
+let btn = document.getElementById('btn');
+
+btn.addEventListener('click', function() {
+    let result = window.confirm('ボタンをクリック');
+    if(result) {
+        console.log('OKがクリックされました')
+    } else {
+        console.log('キャンセルがクリックされました')
+    }
+})
+```

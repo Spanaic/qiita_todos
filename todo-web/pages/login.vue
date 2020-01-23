@@ -35,28 +35,10 @@ export default {
   },
   methods: {
     login() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(user => {
-          const currentUser = axios.get(`/v1/users?uid=${user.uid}`);
-          commit("setUser", currentUser).then(() => {
-            this.$router.push("/");
-          });
-        })
-        .catch(err => {
-          console.log(err);
-          this.err = (code => {
-            switch (code) {
-              case "auth/user-not-found":
-                return "メールアドレスが間違っています";
-              case "auth/wrong-password":
-                return "※パスワードが正しくありません";
-              default:
-                return "※メールアドレスとパスワードをご確認ください";
-            }
-          })(err.code); //ここの記述が入り組んでてわかりにくい
-        });
+      this.$store.dispatch("login", {
+        email: this.email,
+        password: this.password
+      });
     }
   }
 };

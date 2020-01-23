@@ -22,9 +22,19 @@ export default {
       title: ""
     };
   },
+  computed: {
+    user() {
+      return this.$store.state.currentUser;
+    }
+  },
   methods: {
     handleSubmit() {
-      this.$emit("submit", this.title); //$emitで渡している第一引数が気になるけど、多分親で使う？
+      const todo = {
+        title: this.title,
+        user_id: this.user.id
+      };
+      this.$emit("submit", todo); //$emitで渡している第一引数が気になるけど、多分親で使う？
+      // 第一引数の"submit"は親の＠submitを指してるかも...聞いてみないとわかんない^^;
       this.title = ""; //入力フォームの初期化処理
     }
   }

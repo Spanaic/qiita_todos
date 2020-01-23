@@ -11,6 +11,7 @@
 <script>
 import AddTodo from "@/components/AddTodo";
 import TodoList from "@/components/TodoList";
+import axios from "@/plugins/axios";
 
 export default {
   components: {
@@ -27,15 +28,14 @@ export default {
       return this.$store.state.currentUser;
     }
   },
-  // created() {
-  //   console.log("process.env.API_KEY", process.env.API_KEY);
-  // },
   methods: {
-    addTodo(title) {
-      this.todos.push({
-        title //$emitで受け取る値は必ずオブジェクトなの？
+    async addTodo(todo) {
+      const { data } = await axios.post("/v1/todos", { todo }); // todoをラップしたのはまたパラメータを渡しやすくするため？恐らく。
+      this.$store.commit("setUser", {
+        ...this.user,
+        todos: [...this.user.todos, data]
       });
-    }
+    } // NOTE:これはスプレッド演算子使いたくなっちゃうやーつ
   }
 };
 </script>

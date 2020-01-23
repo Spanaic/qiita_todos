@@ -63,8 +63,10 @@ export default {
           };
           // res.userをそのまま引数に渡さないのは、this.nameを{ user }引数に格納するため
           // {}でuserをラップしてapiに渡すparamsの形を整えてる！
-          axios.post("/v1/users", { user }).then(() => {
-            //受け取ったresを処理しないため、わかりやすく()に値を格納している
+          axios.post("/v1/users", { user }).then(res => {
+            //受け取ったresを処理しないため、わかりやすく()
+            this.$store.commit("setLoading", false);
+            this.$store.commit("setUser", res.data);
             this.$route.push("/");
           });
         })

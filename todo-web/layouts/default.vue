@@ -1,5 +1,7 @@
 <template>
   <v-app dark>
+    <Success />
+    <Loading />
     <v-navigation-drawer v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed app>
       <v-list>
         <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
@@ -51,29 +53,70 @@
 </template>
 
 <script>
+import Loading from "@/components/Loading";
+import Success from "@/components/Success";
+
 export default {
+  components: {
+    Loading,
+    Success
+  },
   data() {
     return {
       clipped: false,
       drawer: false,
       fixed: false,
-      items: [
-        {
-          icon: "mdi-apps",
-          title: "Todos",
-          to: "/"
-        },
-        {
-          icon: "mdi-chart-bubble",
-          title: "Mypage",
-          to: "/mypage"
-        }
-      ],
+      // items: [
+      //   {
+      //     icon: "mdi-apps",
+      //     title: "Todos",
+      //     to: "/"
+      //   },
+      //   {
+      //     icon: "mdi-chart-bubble",
+      //     title: "Mypage",
+      //     to: "/mypage"
+      //   }
+      // ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
       title: "Todo App"
     };
+  },
+  computed: {
+    user() {
+      return this.$store.state.currentUser;
+    },
+    items() {
+      if (this.user) {
+        return [
+          {
+            icon: "mdi-apps",
+            title: "Todos",
+            to: "/"
+          },
+          {
+            icon: "mdi-chart-bubble",
+            title: "Mypage",
+            to: "/mypage"
+          }
+        ];
+      } else {
+        return [
+          {
+            icon: "mdi-apps",
+            title: "ログイン",
+            to: "/login"
+          },
+          {
+            icon: "mdi-chart-bubble",
+            title: "新規登録",
+            to: "/signup"
+          }
+        ];
+      }
+    }
   }
 };
 </script>

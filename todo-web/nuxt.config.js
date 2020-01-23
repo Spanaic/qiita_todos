@@ -56,6 +56,9 @@ export default {
   */
   axios: {
   },
+  router: {
+    middleware: ['router-guard']
+  },
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
