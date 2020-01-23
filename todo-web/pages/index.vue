@@ -3,7 +3,7 @@
     <p>{{ user.name }}</p>
     <AddTodo @submit="addTodo" />
     <!-- todoの入力フォームコンポーネント -->
-    <TodoList :todos="todos" />
+    <TodoList :todos="user.todos" />
     <!-- todoリスト表示用コンポーネント -->
   </div>
 </template>
@@ -31,10 +31,12 @@ export default {
   methods: {
     async addTodo(todo) {
       const { data } = await axios.post("/v1/todos", { todo }); // todoをラップしたのはまたパラメータを渡しやすくするため？恐らく。
+      //  const todos = this.user.todos.push(data) //これがあればtodos:
       this.$store.commit("setUser", {
         ...this.user,
         todos: [...this.user.todos, data]
       });
+      // this.user.todos.push(data);
     } // NOTE:これはスプレッド演算子使いたくなっちゃうやーつ
   }
 };

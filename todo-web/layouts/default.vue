@@ -89,7 +89,7 @@ export default {
       return this.$store.state.currentUser;
     },
     items() {
-      if (this.user) {
+      if (this.$store.state.currentUser) {
         return [
           {
             icon: "mdi-apps",

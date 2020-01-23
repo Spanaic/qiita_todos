@@ -2,7 +2,8 @@ class V1::TodosController < ApplicationController
     def create
         todo = Todo.new(todo_params)
         if todo.save
-            render json: todo, status: create
+            render json: todo
+            #  status: :create
         else
             render json: todo.errors, status: :unprocessable_entity
             # 422 処理出来ないエンティティ。WebDAVの拡張ステータスコード

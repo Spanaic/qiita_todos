@@ -27,7 +27,7 @@ export default {
         {
           text: "タイトル",
           align: "left",
-          sortable: "false",
+          sortable: false,
           value: "title"
         },
         { text: "ユーザー名", value: "username" },
@@ -38,11 +38,11 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.state.user;
+      return this.$store.state.currentUser;
     }
   },
   methods: {
-    async delete(item) {
+    async deleteItem(item) {
       const res = confirm("本当に削除しますか？"); // これは初めて見た！confirm()メソッドの戻り値で条件分岐式。確認と処理の実行で一石二鳥の便利メソッド
       if (res) {
         await axios.delete(`/v1/todos/${item.id}`);

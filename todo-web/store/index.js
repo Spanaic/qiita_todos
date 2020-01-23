@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import firebase from "@/plugins/firebase"
 
 Vue.use(Vuex)
 
@@ -33,7 +34,7 @@ const store = () => { //定数storeの中にVuex.Storeインスタンスを戻�
                         message: "ログインしました"
                     });
                     setTimeout(() => {
-                        commmit("setNotice", {});
+                        commit("setNotice", {});
                     }, 2000);
                     this.$router.push("/")
                 }).catch(err => {
@@ -52,7 +53,7 @@ const store = () => { //定数storeの中にVuex.Storeインスタンスを戻�
             },
             logout() {
                 firebase.auth().signOut().then(() => {
-                    commit("setUser", null);
+                    commit("setUser", {});
                     this.$router.push("/login")
                 }).catch(err => {
                     console.log(err);
